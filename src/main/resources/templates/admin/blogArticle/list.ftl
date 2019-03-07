@@ -136,7 +136,7 @@
         </script>
         <script type="text/html" id="content">
             {{#  if(d.content != "" && d.content != null){ }}
-            <span><button lay-event="showcontent" class="layui-btn layui-btn-warm layui-btn-sm">文章预览</button></span>
+            <span><a href="${d.id}" target="_blank" >${d.title}</a> </span>
             {{#  } else { }}
             <span ></span>
             {{#  } }}
@@ -298,14 +298,6 @@
                     anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
                 });
             }
-            if(obj.event === "showcontent"){
-                var contentIndex = layer.open({
-                    type: 1,
-                    title: 'content预览',
-                    content: '<div class="detail-body" style="margin:20px;">'+data.content+'</div>'
-                });
-                layer.full(contentIndex);
-            }
         });
 
         var t = {
@@ -327,7 +319,6 @@
                 {field:'title', title: '标题'},
                 {field:'category', title: '文章类型',templet:'#category'},
                 {field:'channelId', title: '所属栏目',templet:'#channel'},
-                {field:'content', title: '内容',templet:'#content'},
                 {field:'isTop', title: '是否置顶',templet:'#isTop'},
                 {field:'isRecommend', title: '是否推荐',templet:'#isRecommend'},
                 {field:'commentCount', title: '评论数'},

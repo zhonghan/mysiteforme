@@ -14,6 +14,7 @@
     <meta name="author" content="${site.author}"/>
     <link rel="icon" href="${site.logo}">
     <link rel="stylesheet" href="${base}/static/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="${base}/static/editor.md-master/css/editormd.css" media="all" />
     <link rel="stylesheet" href="${base}/static/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
     <style type="text/css">
         .layui-form-item .layui-inline{ width:33.333%; float:left; margin-right:0; }
@@ -160,8 +161,9 @@
     <div class="layui-form-item">
         <label class="layui-form-label">内容</label>
         <div class="layui-input-block">
-                <div id="content">${blogArticle.content}</div>
-
+                <div id="content">
+                    <textarea>${blogArticle.content}</textarea>
+                </div>
         </div>
     </div>
     <div class="layui-form-item">
@@ -193,7 +195,7 @@
 </form>
 <script type="text/javascript" src="${base}/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="${base}/static/layui/layui.js"></script>
-<script type="text/javascript" src="${base}/static/js/wangEditor.min.js"></script>
+<script type="text/javascript" src="${base}/static/editor.md-master/editormd.js"></script>
 <script type="text/javascript" src="${base}/static/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script>
 <script>
     layui.use(['form','jquery','layer','upload','laydate'],function(){
@@ -202,7 +204,6 @@
                 upload = layui.upload,
                 laydate = layui.laydate,
                 imageIndex,
-                E = window.wangEditor,
                 layer = layui.layer,
                 zTreeObj,
                 setting  = {callback:{
@@ -311,41 +312,32 @@
             </#if>
         });
 
-        var content_editor = new E('#content');
-            //图片上传
-        content_editor.customConfig.uploadImgServer = '${base}/file/uploadWang';
-        content_editor.customConfig.uploadFileName = 'test';
-        // 自定义处理粘贴的文本内容(这里处理图片抓取)
-        content_editor.customConfig.pasteTextHandle = function (content) {
-            if(undefined == content){
-                return content;
-            }
-            if(content.indexOf("src=")<=0){
-                return content;
-            }
-            var loadContent = layer.load(2, {
-                shade: [0.3, '#333']
-            });
-            $.ajax({
-                url: "${base}/file/doContent/",
-                type: "POST",
-                async: false,
-                data:{"content":content},
-                dataType: "json",
-                success:function(res){
-                    layer.close(loadContent);
-                    content = res.data;
-                }
-            });
-            return content;
-        };
-        // 关闭粘贴样式的过滤
-        content_editor.customConfig.pasteFilterStyle = false;
-        content_editor.customConfig.customAlert = function (info) {
-            // info 是需要提示的内容
-            layer.msg(info);
-        };
-        content_editor.create();
+
+
+        var content_editor;
+        content_editor = editormd("content", {
+            placeholder:'本编辑器支持Markdown编辑，左边编写，右边预览',  //默认显示的文字，这里就不解释了
+            width: "90%",
+            height: 640,
+            syncScrolling: "single",
+            path: "/static/editor.md-master/lib/",   //你的path路径（原资源文件中lib包在我们项目中所放的位置）
+            theme: "dark",//工具栏主题
+            previewTheme: "dark",//预览主题
+            editorTheme: "pastel-on-dark",//编辑主题
+            saveHTMLToTextarea: true,
+            emoji: false,
+            taskList: true,
+            tocm: true,         // Using [TOCM]
+            tex: true,                   // 开启科学公式TeX语言支持，默认关闭
+            flowChart: true,             // 开启流程图支持，默认关闭
+            sequenceDiagram: true,       // 开启时序/序列图支持，默认关闭,
+            toolbarIcons : function() {  //自定义工具栏，后面有详细介绍
+                return editormd.toolbarModes['simple']; // full, simple, mini
+            },
+        });
+
+
+
 
         form.on('radio(category)', function(data){
             if(data.value === "1"){
@@ -363,20 +355,15 @@
                 data.field.publistTime = new Date(data.field.publistTime);
             }
             //编辑器数据
-            var c = content_editor.txt.html(),
-            ct=content_editor.txt.text();
-            if(null === ct || "" === ct || undefined === ct){
+            var c = content_editor.getMarkdown();
+
+            if(null === c || "" === c || undefined === c){
                 layer.msg("内容不能为空");
                 return false;
             }
-            if(null === c || "" === c || undefined === c){
-                layer.msg("editor不能为空");
-                return false;
-            }
-            c = c.replace(/\"/g, "'");
-            ct = ct.replace(/\"/g, "'");
+
             data.field.content = c;
-            data.field.text = ct;
+            data.field.text = "";
             //是否置顶按钮
             if(undefined === data.field.top || '0' === data.field.top || null === data.field.top){
                 data.field.top = false;
