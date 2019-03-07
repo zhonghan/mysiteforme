@@ -33,7 +33,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
 	/* 这里caching不能添加put 因为添加了总会执行该方法
 	 * @see com.mysiteforme.service.UserService#findUserByLoginName(java.lang.String)
 	 */
-	@Cacheable(value = "user", key = "'user_name_'+#name",unless = "#result == null")
+//	@Cacheable(value = "user", key = "'user_name_'+#name",unless = "#result == null")
 	@Override
 	public User findUserByLoginName(String name) {
 		// TODO Auto-generated method stub
@@ -44,7 +44,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
 	}
 
 
-	@Cacheable(value = "user",key="'user_id_'+T(String).valueOf(#id)",unless = "#result == null")
+//	@Cacheable(value = "user",key="'user_id_'+T(String).valueOf(#id)",unless = "#result == null")
 	@Override
 	public User findUserById(Long id) {
 		// TODO Auto-generated method stub
@@ -54,12 +54,12 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
 	}
 
 	@Override
-	@Caching(put = {
-			@CachePut(value = "user", key = "'user_id_'+T(String).valueOf(#result.id)",condition = "#result.id != null and #result.id != 0"),
-			@CachePut(value = "user", key = "'user_name_'+#user.loginName", condition = "#user.loginName !=null and #user.loginName != ''"),
-			@CachePut(value = "user", key = "'user_email_'+#user.email", condition = "#user.email != null and #user.email != ''"),
-			@CachePut(value = "user", key = "'user_tel_'+#user.tel", condition = "#user.tel != null and #user.tel != ''")
-	})
+//	@Caching(put = {
+//			@CachePut(value = "user", key = "'user_id_'+T(String).valueOf(#result.id)",condition = "#result.id != null and #result.id != 0"),
+//			@CachePut(value = "user", key = "'user_name_'+#user.loginName", condition = "#user.loginName !=null and #user.loginName != ''"),
+//			@CachePut(value = "user", key = "'user_email_'+#user.email", condition = "#user.email != null and #user.email != ''"),
+//			@CachePut(value = "user", key = "'user_tel_'+#user.tel", condition = "#user.tel != null and #user.tel != ''")
+//	})
 	@Transactional(readOnly = false, rollbackFor = Exception.class)
 	public User saveUser(User user) {
 		ToolUtil.entryptPassword(user);
@@ -71,12 +71,12 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
 	}
 
 	@Override
-	@Caching(evict = {
-			@CacheEvict(value = "user", key = "'user_id_'+T(String).valueOf(#user.id)",condition = "#user.id != null and #user.id != 0"),
-			@CacheEvict(value = "user", key = "'user_name_'+#user.loginName", condition = "#user.loginName !=null and #user.loginName != ''"),
-			@CacheEvict(value = "user", key = "'user_email_'+#user.email", condition = "#user.email != null and #user.email != ''"),
-			@CacheEvict(value = "user", key = "'user_tel_'+#user.tel", condition = "#user.tel != null and #user.tel != ''" ),
-	})
+//	@Caching(evict = {
+//			@CacheEvict(value = "user", key = "'user_id_'+T(String).valueOf(#user.id)",condition = "#user.id != null and #user.id != 0"),
+//			@CacheEvict(value = "user", key = "'user_name_'+#user.loginName", condition = "#user.loginName !=null and #user.loginName != ''"),
+//			@CacheEvict(value = "user", key = "'user_email_'+#user.email", condition = "#user.email != null and #user.email != ''"),
+//			@CacheEvict(value = "user", key = "'user_tel_'+#user.tel", condition = "#user.tel != null and #user.tel != ''" ),
+//	})
 	@Transactional(readOnly = false, rollbackFor = Exception.class)
 	public User updateUser(User user) {
 		baseMapper.updateById(user);
@@ -108,12 +108,12 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
 
 	@Transactional(readOnly = false, rollbackFor = Exception.class)
 	@Override
-	@Caching(evict = {
-			@CacheEvict(value = "user", key = "'user_id_'+T(String).valueOf(#user.id)",condition = "#user.id != null and #user.id != 0"),
-			@CacheEvict(value = "user", key = "'user_name_'+#user.loginName", condition = "#user.loginName !=null and #user.loginName != ''"),
-			@CacheEvict(value = "user", key = "'user_email_'+#user.email", condition = "#user.email != null and #user.email != ''"),
-			@CacheEvict(value = "user", key = "'user_tel_'+#user.tel", condition = "#user.tel != null and #user.tel != ''" )
-	})
+//	@Caching(evict = {
+//			@CacheEvict(value = "user", key = "'user_id_'+T(String).valueOf(#user.id)",condition = "#user.id != null and #user.id != 0"),
+//			@CacheEvict(value = "user", key = "'user_name_'+#user.loginName", condition = "#user.loginName !=null and #user.loginName != ''"),
+//			@CacheEvict(value = "user", key = "'user_email_'+#user.email", condition = "#user.email != null and #user.email != ''"),
+//			@CacheEvict(value = "user", key = "'user_tel_'+#user.tel", condition = "#user.tel != null and #user.tel != ''" )
+//	})
 	public void deleteUser(User user) {
 		user.setDelFlag(true);
 		user.updateById();

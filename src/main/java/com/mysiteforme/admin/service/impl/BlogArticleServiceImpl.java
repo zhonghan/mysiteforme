@@ -69,7 +69,7 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleDao, BlogArti
         }
     }
 
-    @Cacheable(value = "oneArticle",key = "'article_id_'+#id",unless = "#result == null ")
+//    @Cacheable(value = "oneArticle",key = "'article_id_'+#id",unless = "#result == null ")
     @Override
     public BlogArticle selectOneDetailById(Long id) {
         Map<String,Object> map = Maps.newHashMap();
@@ -94,7 +94,7 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleDao, BlogArti
         return list;
     }
 
-    @Cacheable(value = "myarticle",key="'directive_limit_'+#paramMap['limit'].toString()+'_channelId_'+#paramMap['channelId'].toString()",unless = "#result == null or #result.size() == 0")
+//    @Cacheable(value = "myarticle",key="'directive_limit_'+#paramMap['limit'].toString()+'_channelId_'+#paramMap['channelId'].toString()",unless = "#result == null or #result.size() == 0")
     @Override
     public List<BlogArticle> selectArticleData(Map<String, Object> paramMap) {
         Long channelId = (Long)paramMap.get("channelId");
@@ -108,7 +108,7 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleDao, BlogArti
         return pageData.getRecords();
     }
 
-    @Cacheable(value = "myarticle",key="'directive_index_limit_'+#paramMap['limit'].toString()+'_order_'+#paramMap['order'].toString()",unless = "#result == null or #result.size() == 0")
+//    @Cacheable(value = "myarticle",key="'directive_index_limit_'+#paramMap['limit'].toString()+'_order_'+#paramMap['order'].toString()",unless = "#result == null or #result.size() == 0")
     @Override
     public List<BlogArticle> selectBlogIndexArticles(Map<String, Object> paramMap) {
         String order = (String)paramMap.get("order");
@@ -140,11 +140,11 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleDao, BlogArti
         return baseMapper.selectIndexArticle(paramMap);
     }
 
-    @Caching(evict = {
-            @CacheEvict(value = "myarticle",allEntries = true),
-            @CacheEvict(value = "blogTagsData",allEntries = true),
-            @CacheEvict(value = "oneArticle",allEntries = true),
-    })
+//    @Caching(evict = {
+//            @CacheEvict(value = "myarticle",allEntries = true),
+//            @CacheEvict(value = "blogTagsData",allEntries = true),
+//            @CacheEvict(value = "oneArticle",allEntries = true),
+//    })
     @Override
     public BlogArticle saveOrUpdateArticle(BlogArticle blogArticle) {
         insertOrUpdate(blogArticle);
@@ -176,7 +176,7 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleDao, BlogArti
         return count == null? 0 : count;
     }
 
-    @CachePut(value = "showBlog",key = "'article_click_id_'+#articleId",unless = "#result == null")
+//    @CachePut(value = "showBlog",key = "'article_click_id_'+#articleId",unless = "#result == null")
     @Override
     public Integer flashArticleClick(Long articleId) {
         return getArticleClick(articleId)+1;
@@ -215,7 +215,7 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleDao, BlogArti
         }
     }
 
-    @Cacheable(value = "myarticle",key="'time_line_channel_id_'+#id.toString()",unless = "#result == null or #result.size() == 0")
+//    @Cacheable(value = "myarticle",key="'time_line_channel_id_'+#id.toString()",unless = "#result == null or #result.size() == 0")
     @Override
     public List<BlogArticle> selectTimeLineList(Long id) {
         EntityWrapper<BlogArticle> wrapper = new EntityWrapper<>();
@@ -231,7 +231,7 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleDao, BlogArti
         return baseMapper.selectNewCommentArticle(limit);
     }
 
-    @Cacheable(value = "blogTagsData",key = "'tag_'+#map['articleId'].toString()+'_sameArticles_limit_'+#map['limit'].toString()")
+//    @Cacheable(value = "blogTagsData",key = "'tag_'+#map['articleId'].toString()+'_sameArticles_limit_'+#map['limit'].toString()")
     @Override
     public List<BlogArticle> selectLikeSameWithTags(Map<String, Object> map) {
         return baseMapper.selectLikeSameWithTags(map);

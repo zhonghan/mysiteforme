@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 public class UploadInfoServiceImpl extends ServiceImpl<UploadInfoDao, UploadInfo> implements UploadInfoService {
 
-    @Cacheable(value = "uploadInfoCache",key = "'getinfo'",unless = "#result == null")
+//    @Cacheable(value = "uploadInfoCache",key = "'getinfo'",unless = "#result == null")
     @Override
     public UploadInfo getOneInfo() {
         EntityWrapper<UploadInfo> wrapper = new EntityWrapper<>();
@@ -30,7 +30,7 @@ public class UploadInfoServiceImpl extends ServiceImpl<UploadInfoDao, UploadInfo
         return selectOne(wrapper);
     }
 
-    @CacheEvict(value = "uploadInfoCache",key = "'getinfo'")
+//    @CacheEvict(value = "uploadInfoCache",key = "'getinfo'")
     @Override
     public void updateInfo(UploadInfo uploadInfo) {
         updateById(uploadInfo);

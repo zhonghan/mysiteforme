@@ -59,14 +59,14 @@ public class BlogTagsServiceImpl extends ServiceImpl<BlogTagsDao, BlogTags> impl
         return selectList(wrapper);
     }
 
-    @Cacheable(value = "blogTagsData",key = "'blog_tags_channel_'+#channelId",unless = "#result == null or #result.size() == 0")
+//    @Cacheable(value = "blogTagsData",key = "'blog_tags_channel_'+#channelId",unless = "#result == null or #result.size() == 0")
     @Override
     public List<BlogTags> getTagsByChannelId(Long channelId) {
         List<BlogTags> list = baseMapper.getTagsByChannelId(channelId);
         return list;
     }
 
-    @Cacheable(value = "blogTagsData",key = "'blog_tags_article_'+#articleId",unless = "#result == null or #result.size() == 0")
+//    @Cacheable(value = "blogTagsData",key = "'blog_tags_article_'+#articleId",unless = "#result == null or #result.size() == 0")
     @Override
     public List<BlogTags> getTagsByArticleId(Long articleId) {
         return baseMapper.getTagsByArticleId(articleId);

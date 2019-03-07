@@ -37,16 +37,16 @@ import java.util.Map;
 @Transactional(readOnly = true, rollbackFor = Exception.class)
 public class MenuServiceImpl extends ServiceImpl<MenuDao, Menu> implements MenuService {
 
-    @Cacheable(value = "allMenus",key = "'allMenus_isShow_'+#map['isShow'].toString()",unless = "#result == null or #result.size() == 0")
+//    @Cacheable(value = "allMenus",key = "'allMenus_isShow_'+#map['isShow'].toString()",unless = "#result == null or #result.size() == 0")
     @Override
     public List<Menu> selectAllMenus(Map<String,Object> map) {
         return baseMapper.getMenus(map);
     }
 
-    @Caching(evict = {
-            @CacheEvict(value = "allMenus",allEntries = true),
-            @CacheEvict(value = "user",allEntries = true)
-    })
+//    @Caching(evict = {
+//            @CacheEvict(value = "allMenus",allEntries = true),
+//            @CacheEvict(value = "user",allEntries = true)
+//    })
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     @Override
     public void saveOrUpdateMenu(Menu menu) {
@@ -80,7 +80,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao, Menu> implements MenuS
         return getZTree(null,totalMenus,ztreeVOs);
     }
 
-    @Cacheable(value = "allMenus",key = "'user_menu_'+T(String).valueOf(#id)",unless = "#result == null or #result.size() == 0")
+//    @Cacheable(value = "allMenus",key = "'user_menu_'+T(String).valueOf(#id)",unless = "#result == null or #result.size() == 0")
     @Override
     public List<ShowMenu> getShowMenuByUser(Long id) {
         Map<String,Object> map = Maps.newHashMap();

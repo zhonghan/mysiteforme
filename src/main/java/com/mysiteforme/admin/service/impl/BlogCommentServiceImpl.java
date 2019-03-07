@@ -79,7 +79,7 @@ public class BlogCommentServiceImpl extends ServiceImpl<BlogCommentDao, BlogComm
         insertOrUpdate(blogComment);
     }
 
-    @Cacheable(value = "commentData",key = "'article_'+#articleId+'_commentcount'")
+//    @Cacheable(value = "commentData",key = "'article_'+#articleId+'_commentcount'")
     @Override
     public Integer getArticleCommentsCount(Long articleId) {
         EntityWrapper<BlogComment> wrapper = new EntityWrapper<>();

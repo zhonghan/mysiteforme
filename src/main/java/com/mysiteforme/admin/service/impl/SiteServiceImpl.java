@@ -24,7 +24,7 @@ import java.util.List;
 @Transactional(readOnly = true, rollbackFor = Exception.class)
 public class SiteServiceImpl extends ServiceImpl<SiteDao, Site> implements SiteService {
 
-    @Cacheable(value = "currentSite",key = "'currentSite'")
+//    @Cacheable(value = "currentSite",key = "'currentSite'")
     @Override
     public Site getCurrentSite() {
         EntityWrapper<Site> wrapper = new EntityWrapper<>();
@@ -32,7 +32,7 @@ public class SiteServiceImpl extends ServiceImpl<SiteDao, Site> implements SiteS
         return selectOne(wrapper);
     }
 
-    @CacheEvict(value = "currentSite",key = "'currentSite'")
+//    @CacheEvict(value = "currentSite",key = "'currentSite'")
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     @Override
     public void updateSite(Site site) {

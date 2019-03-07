@@ -28,10 +28,10 @@ import java.util.Set;
 @Transactional(readOnly = true, rollbackFor = Exception.class)
 public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleService {
 
-    @Caching(
-            put = {@CachePut(value = "role",key = "'role_id_'+T(String).valueOf(#result.id)",condition = "#result.id != null and #result.id != 0")},
-            evict = {@CacheEvict(value = "roleAll",key = "'roleAll'" )
-    })
+//    @Caching(
+//            put = {@CachePut(value = "role",key = "'role_id_'+T(String).valueOf(#result.id)",condition = "#result.id != null and #result.id != 0")},
+//            evict = {@CacheEvict(value = "roleAll",key = "'roleAll'" )
+//    })
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     @Override
     public Role saveRole(Role role) {
@@ -40,19 +40,19 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
         return role;
     }
 
-    @Cacheable(value = "role",key = "'role_id_'+T(String).valueOf(#id)",unless = "#result == null")
+//    @Cacheable(value = "role",key = "'role_id_'+T(String).valueOf(#id)",unless = "#result == null")
     @Override
     public Role getRoleById(Long id) {
         Role role = baseMapper.selectRoleById(id);
         return role;
     }
 
-    @Caching(evict = {
-            @CacheEvict(value = "role",key = "'role_id_'+T(String).valueOf(#role.id)" ),
-            @CacheEvict(value = "roleAll",key = "'roleAll'" ),
-            @CacheEvict(value = "user",allEntries=true ),
-            @CacheEvict(value = "allMenus",allEntries = true)
-    })
+//    @Caching(evict = {
+//            @CacheEvict(value = "role",key = "'role_id_'+T(String).valueOf(#role.id)" ),
+//            @CacheEvict(value = "roleAll",key = "'roleAll'" ),
+//            @CacheEvict(value = "user",allEntries=true ),
+//            @CacheEvict(value = "allMenus",allEntries = true)
+//    })
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     @Override
     public void updateRole(Role role) {
@@ -61,11 +61,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
         baseMapper.saveRoleMenus(role.getId(),role.getMenuSet());
     }
 
-    @Caching(evict = {
-            @CacheEvict(value = "role",key = "'role_id_'+T(String).valueOf(#role.id)" ),
-            @CacheEvict(value = "roleAll",key = "'roleAll'" ),
-            @CacheEvict(value = "user",allEntries=true )
-    })
+//    @Caching(evict = {
+//            @CacheEvict(value = "role",key = "'role_id_'+T(String).valueOf(#role.id)" ),
+//            @CacheEvict(value = "roleAll",key = "'roleAll'" ),
+//            @CacheEvict(value = "user",allEntries=true )
+//    })
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     @Override
     public void deleteRole(Role role) {
@@ -94,7 +94,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
         return baseMapper.selectCount(wrapper);
     }
 
-    @Cacheable(value = "roleAll",key = "'roleAll'",unless = "#result == null or #result.size() == 0")
+//    @Cacheable(value = "roleAll",key = "'roleAll'",unless = "#result == null or #result.size() == 0")
     @Override
     public List<Role> selectAll() {
         EntityWrapper<Role> wrapper = new EntityWrapper<>();

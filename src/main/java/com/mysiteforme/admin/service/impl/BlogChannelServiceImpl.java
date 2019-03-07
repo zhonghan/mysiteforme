@@ -30,7 +30,7 @@ import java.util.Map;
 @Transactional(rollbackFor = Exception.class)
 public class BlogChannelServiceImpl extends ServiceImpl<BlogChannelDao, BlogChannel> implements BlogChannelService {
 
-    @Cacheable(value = "channelData",key = "'articleZtree'",unless = "#result == null or #result.size() == 0")
+//    @Cacheable(value = "channelData",key = "'articleZtree'",unless = "#result == null or #result.size() == 0")
     @Override
     public List<ZtreeVO> selectZtreeData() {
         Map<String,Object> map = Maps.newHashMap();
@@ -38,7 +38,7 @@ public class BlogChannelServiceImpl extends ServiceImpl<BlogChannelDao, BlogChan
         return baseMapper.selectZtreeData(map);
     }
 
-    @Cacheable(value = "channelData",key = "'channelList'",unless = "#result == null or #result.size() == 0")
+//    @Cacheable(value = "channelData",key = "'channelList'",unless = "#result == null or #result.size() == 0")
     @Override
     public List<BlogChannel> selectChannelList() {
         Map<String,Object> map = Maps.newHashMap();
@@ -52,12 +52,12 @@ public class BlogChannelServiceImpl extends ServiceImpl<BlogChannelDao, BlogChan
         return list;
     }
 
-    @Caching(evict = {
-            @CacheEvict(value = "channelData",allEntries = true),
-            @CacheEvict(value = "myarticle",allEntries = true),
-            @CacheEvict(value = "oneArticle",allEntries = true),
-            @CacheEvict(value = "blogTagsData",allEntries = true)
-    })
+//    @Caching(evict = {
+//            @CacheEvict(value = "channelData",allEntries = true),
+//            @CacheEvict(value = "myarticle",allEntries = true),
+//            @CacheEvict(value = "oneArticle",allEntries = true),
+//            @CacheEvict(value = "blogTagsData",allEntries = true)
+//    })
     @Override
     public void saveOrUpdateChannel(BlogChannel blogChannel) {
         try {
@@ -75,13 +75,13 @@ public class BlogChannelServiceImpl extends ServiceImpl<BlogChannelDao, BlogChan
         return selectCount(wrapper);
     }
 
-    @Cacheable(value = "channelData",key = "'blog_channel_top_limit'+#limit",unless = "#result == null or #result.size() == 0")
+//    @Cacheable(value = "channelData",key = "'blog_channel_top_limit'+#limit",unless = "#result == null or #result.size() == 0")
     @Override
     public List<BlogChannel> getChannelListByWrapper(int limit, EntityWrapper<BlogChannel> wrapper) {
         return selectPage(new Page<>(1,limit),wrapper).getRecords();
     }
 
-    @Cacheable(value = "channelData",key = "'blog_parent_channel_list_'+#channelId",unless = "#result == null or #result.size() == 0")
+//    @Cacheable(value = "channelData",key = "'blog_parent_channel_list_'+#channelId",unless = "#result == null or #result.size() == 0")
     @Override
     public List<BlogChannel> getParentsChannel(Long channelId) {
         EntityWrapper<BlogChannel> wrapper = new EntityWrapper<>();

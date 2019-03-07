@@ -27,7 +27,7 @@ import java.util.List;
 @Transactional(readOnly = true, rollbackFor = Exception.class)
 public class DictServiceImpl extends ServiceImpl<DictDao, Dict> implements DictService {
 
-    @Cacheable(value = "dictCache",key = "#type",unless = "#result == null or #result.size() == 0")
+//    @Cacheable(value = "dictCache",key = "#type",unless = "#result == null or #result.size() == 0")
     @Override
     public List<Dict> getDictByType(String type) {
         EntityWrapper<Dict> wrapper = new EntityWrapper<>();
