@@ -53,11 +53,6 @@ public class BaseController {
 	@Autowired
 	protected BlogTagsService blogTagsService;
 
-	@Autowired
-	protected QuartzTaskService quartzTaskService;
-
-	@Autowired
-	protected QuartzTaskLogService quartzTaskLogService;
 
 	@Autowired
 	protected UploadInfoService uploadInfoService;

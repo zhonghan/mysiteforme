@@ -97,8 +97,6 @@
         (select count(*) from blog_article where del_flag = false) as "blog:article:list",
         (select count(*) from blog_channel where del_flag = false) as "blog:channel:list",
         (select count(*) from blog_tags where del_flag = false) as "blog:tags:list",
-        (select count(*) from quartz_task where del_flag = false) as "quartz:task:list",
-        (select count(*) from quartz_task_log where del_flag = false) as "quartz:log:list"
     </select>
 
 

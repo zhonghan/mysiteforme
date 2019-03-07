@@ -34,7 +34,6 @@
 		<jackson.version>2.9.3</jackson.version>
 		<druid.version>1.1.9</druid.version>
 		<guava.version>17.0</guava.version>
-		<quartz.version>2.3.0</quartz.version>
 		<skip>true</skip>
 	</properties>
 
@@ -166,18 +165,6 @@
 			<version>${mybatisplus.version}</version>
 		</dependency>
 
-		<!--定时任务-->
-		<dependency>
-			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-			<version>${quartz.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.mchange</groupId>
-					<artifactId>c3p0</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 
 		<!-- Google jar -->
 		<dependency>

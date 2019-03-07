@@ -20,7 +20,6 @@
 * 安全框架：`Apache Shiro 1.3.2`
 * 缓存框架：`Redis 4.0`
 * 搜索框架：`Lucene 7.1`
-* 任务调度：`quartz 2.3`
 * 持久层框架：`MyBatis 3` <a href="http://baomidou.oschina.io/mybatis-plus-doc/#/" target="_blank">mybatisplus</a> 2.1.4
 * 数据库连接池：`Alibaba Druid 1.0.2`
 * 日志管理：`SLF4J 1.7`、`Log4j`
@@ -53,7 +52,7 @@
 
 # 快速体验
 * 将源码导入IDE 
-* 将源码路径下的src/main/resources/sql 中的mysiteforme.sql导入到数据库中(qrtz.sql为定时任务的几张jibenbiao mysiteforme.sql已经包含)
+* 将源码路径下的src/main/resources/sql 中的mysiteforme.sql导入到数据库中()
 * 将src\main\resources目录下的application.yml配置文件里的mysql用户名密码改成你本地的
 * 安装redis数据库 默认数据库密码为空(注*** 必须安装redis 否则本系统会报错)
 * redis的window版本有些地方下载可以下不下来,可以到这里下载`https://pan.baidu.com/s/1dG22JQT`  
