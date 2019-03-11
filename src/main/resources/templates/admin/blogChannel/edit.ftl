@@ -89,7 +89,7 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">是否在首页展示</label>
+        <label class="layui-form-label">是否关联文章</label>
         <div class="layui-input-block">
                 <input type="checkbox" name="baseChannel"  lay-skin="switch" lay-text="是|否" value="1" <#if (blogChannel.baseChannel == true)> checked </#if> >
 

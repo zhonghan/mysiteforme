@@ -29,18 +29,6 @@
             <a href="#" class="logo">mysiteforme</a>
             <!-- 显示/隐藏菜单 -->
             <a href="javascript:" class="iconfont hideMenu icon-menu1"></a>
-            <#--<!-- 搜索 &ndash;&gt;-->
-            <#--<div class="layui-form component">-->
-                <#--<select name="modules" lay-verify="required" lay-search="">-->
-                    <#--<option value="">直接选择或搜索选择</option>-->
-                    <#--<#if (userMenu?size>0)>-->
-                        <#--<#list userMenu as items>-->
-                        <#--<option value="${items.href}">${items.name}</option>-->
-                        <#--</#list>-->
-                    <#--</#if>-->
-                <#--</select>-->
-                <#--<i class="layui-icon">&#xe615;</i>-->
-            <#--</div>-->
             <!-- 天气信息 -->
             <div class="weather" pc>
                 <div id="tp-weather-widget"></div>
@@ -116,14 +104,14 @@
             </ul>
             <div class="layui-tab-content clildFrame">
                 <div class="layui-tab-item layui-show">
-                    <iframe src="${base}/main"></iframe>
+                    <#--<iframe src="${base}/main"></iframe>-->
                 </div>
             </div>
         </div>
     </div>
     <!-- 底部 -->
     <div class="layui-footer footer">
-        <p>Copyright © 2018孤独的旅行家  Design By 马哥 <a href="http://www.miibeian.gov.cn" target="_blank">苏ICP备17063650号 </a></p>
+        <p>Copyright ©Jiuyescm <a href="http://www.miibeian.gov.cn" target="_blank"> </a></p>
     </div>
 </div>
 <script>

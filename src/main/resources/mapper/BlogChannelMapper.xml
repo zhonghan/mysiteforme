@@ -8,7 +8,8 @@
             id,
             name,
             parent_id as "parentId",
-            sort sequence
+            sort sequence,
+            is_base_channel isAssociateArticle
         from blog_channel
 
     </select>

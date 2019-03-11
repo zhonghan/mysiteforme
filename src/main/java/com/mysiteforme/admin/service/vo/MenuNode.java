@@ -9,6 +9,10 @@ public class MenuNode implements Comparable<MenuNode> {
     private Long parentId;
     private int sequence;
     private int level;
+    /**
+     * 是否关联文章
+     */
+    private boolean isAssociateArticle;
     private List<MenuNode> subMenuNodeList;
 
 
@@ -45,6 +49,15 @@ public class MenuNode implements Comparable<MenuNode> {
 
     public MenuNode setLevel(int level) {
         this.level = level;
+        return this;
+    }
+
+    public boolean isAssociateArticle() {
+        return isAssociateArticle;
+    }
+
+    public MenuNode setAssociateArticle(boolean associateArticle) {
+        isAssociateArticle = associateArticle;
         return this;
     }
 

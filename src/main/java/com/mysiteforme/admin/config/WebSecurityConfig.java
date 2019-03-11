@@ -44,7 +44,6 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter{
         // 排除配置
         addInterceptor.excludePathPatterns("/error");
         addInterceptor.excludePathPatterns("/web/**");
-        addInterceptor.excludePathPatterns("/login**");
         // 拦截配置
         addInterceptor.addPathPatterns("/**");
     }
@@ -60,12 +59,15 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter{
                 UserHolder.set(user);
                 return true;
             }
-            String token = getToken(request);
-            if(StringUtils.isEmpty(token)) {
-                if(!StringUtils.isEmpty(request.getQueryString()) && request.getQueryString().contains(TOKEN)) {
-                    token = request.getQueryString().substring("token=".length());
-                }
+            String token = null;
+            if(!StringUtils.isEmpty(request.getQueryString()) && request.getQueryString().contains(TOKEN)) {
+                token = request.getQueryString().substring(TOKEN.length() + 1);
             }
+
+            if(StringUtils.isEmpty(token)) {
+                token = getToken(request);
+            }
+
             if(!StringUtils.isEmpty(token)) {
                 User user = getUserByToken(token);
                 if(user != null){
@@ -103,7 +105,7 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter{
     private User getUserByToken(String token) {
         URL url= null;
         try {
-            url = new URL(ACCOUNT_SITE_GET_USER_BY_TOKEN_URL+"?token="+token);
+            url = new URL(ACCOUNT_SITE_GET_USER_BY_TOKEN_URL+"?"+TOKEN+"="+token);
             HttpURLConnection urlConnection=(HttpURLConnection) url.openConnection();
             urlConnection.setConnectTimeout(5000);
             urlConnection.setReadTimeout(5000);
