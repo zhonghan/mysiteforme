@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.mysiteforme.admin.entity.BlogChannel;
 import com.baomidou.mybatisplus.service.IService;
 import com.mysiteforme.admin.entity.VO.ZtreeVO;
+import com.mysiteforme.admin.service.vo.MenuNode;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
  */
 public interface BlogChannelService extends IService<BlogChannel> {
 
+    List<MenuNode> getMenuNodeTree();
     /**
      * 获取ztree格式的树结构数据
      * @return

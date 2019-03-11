@@ -2,21 +2,21 @@ package com.mysiteforme.admin.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.mysiteforme.admin.entity.BlogChannel;
 import com.mysiteforme.admin.dao.BlogChannelDao;
+import com.mysiteforme.admin.entity.BlogChannel;
 import com.mysiteforme.admin.entity.VO.ZtreeVO;
 import com.mysiteforme.admin.service.BlogChannelService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
+import com.mysiteforme.admin.service.vo.MenuNode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -30,7 +30,24 @@ import java.util.Map;
 @Transactional(rollbackFor = Exception.class)
 public class BlogChannelServiceImpl extends ServiceImpl<BlogChannelDao, BlogChannel> implements BlogChannelService {
 
-//    @Cacheable(value = "channelData",key = "'articleZtree'",unless = "#result == null or #result.size() == 0")
+    @Override
+    public List<MenuNode> getMenuNodeTree() {
+
+        List<MenuNode>  allMenuNode = baseMapper.getAllVisibleMenus();
+
+        List<MenuNode> root = allMenuNode.stream().filter(i->i.getParentId()== null).collect(Collectors.toList());
+        Map<Long, MenuNode> map = root.stream().collect(Collectors.toMap(MenuNode::getId, a -> a,(k1,k2)->k1));
+        List<MenuNode> others = allMenuNode.stream().filter(i->i.getParentId()!= null).collect(Collectors.toList());
+        for(MenuNode node : others) {
+            MenuNode parent = map.get(node.getParentId());
+            parent.getSubMenuNodeList().add(node);
+            map.put(node.getId(), node);
+        }
+        return root;
+    }
+
+
+
     @Override
     public List<ZtreeVO> selectZtreeData() {
         Map<String,Object> map = Maps.newHashMap();
@@ -38,7 +55,7 @@ public class BlogChannelServiceImpl extends ServiceImpl<BlogChannelDao, BlogChan
         return baseMapper.selectZtreeData(map);
     }
 
-//    @Cacheable(value = "channelData",key = "'channelList'",unless = "#result == null or #result.size() == 0")
+
     @Override
     public List<BlogChannel> selectChannelList() {
         Map<String,Object> map = Maps.newHashMap();
@@ -52,12 +69,6 @@ public class BlogChannelServiceImpl extends ServiceImpl<BlogChannelDao, BlogChan
         return list;
     }
 
-//    @Caching(evict = {
-//            @CacheEvict(value = "channelData",allEntries = true),
-//            @CacheEvict(value = "myarticle",allEntries = true),
-//            @CacheEvict(value = "oneArticle",allEntries = true),
-//            @CacheEvict(value = "blogTagsData",allEntries = true)
-//    })
     @Override
     public void saveOrUpdateChannel(BlogChannel blogChannel) {
         try {
@@ -75,13 +86,13 @@ public class BlogChannelServiceImpl extends ServiceImpl<BlogChannelDao, BlogChan
         return selectCount(wrapper);
     }
 
-//    @Cacheable(value = "channelData",key = "'blog_channel_top_limit'+#limit",unless = "#result == null or #result.size() == 0")
+
     @Override
     public List<BlogChannel> getChannelListByWrapper(int limit, EntityWrapper<BlogChannel> wrapper) {
         return selectPage(new Page<>(1,limit),wrapper).getRecords();
     }
 
-//    @Cacheable(value = "channelData",key = "'blog_parent_channel_list_'+#channelId",unless = "#result == null or #result.size() == 0")
+
     @Override
     public List<BlogChannel> getParentsChannel(Long channelId) {
         EntityWrapper<BlogChannel> wrapper = new EntityWrapper<>();

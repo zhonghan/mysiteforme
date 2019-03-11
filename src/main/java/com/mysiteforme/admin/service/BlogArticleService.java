@@ -30,6 +30,8 @@ public interface BlogArticleService extends IService<BlogArticle> {
      */
     BlogArticle selectOneDetailById(Long id);
 
+    BlogArticle selectOneChannelId(Long channelId);
+
 
     /**
      * 分页查询文章列表

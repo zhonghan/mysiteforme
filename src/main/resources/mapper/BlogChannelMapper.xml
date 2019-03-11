@@ -3,6 +3,16 @@
 <mapper namespace="com.mysiteforme.admin.dao.BlogChannelDao" >
     <!-- 这儿定义一个resultMap -->
 
+    <select id="getAllVisibleMenus" resultType="com.mysiteforme.admin.service.vo.MenuNode">
+        select
+            id,
+            name,
+            parent_id as "parentId",
+            sort sequence
+        from blog_channel
+
+    </select>
+
     <resultMap type="com.mysiteforme.admin.entity.VO.ZtreeVO" id="getSelf">
         <id property="id" column="id"/>
         <result property="pid" column="pid"/>

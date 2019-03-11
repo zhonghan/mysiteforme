@@ -3,6 +3,7 @@ package com.mysiteforme.admin.dao;
 import com.mysiteforme.admin.entity.BlogChannel;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.mysiteforme.admin.entity.VO.ZtreeVO;
+import com.mysiteforme.admin.service.vo.MenuNode;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,8 @@ import java.util.Map;
  * @since 2018-01-17
  */
 public interface BlogChannelDao extends BaseMapper<BlogChannel> {
+
+    List<MenuNode> getAllVisibleMenus();
 
     List<ZtreeVO> selectZtreeData(Map<String,Object> map);
 
