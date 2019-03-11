@@ -1,26 +1,22 @@
 package com.mysiteforme.admin.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.gson.JsonObject;
-import com.mysiteforme.admin.dao.BlogChannelDao;
-import com.mysiteforme.admin.entity.BlogArticle;
 import com.mysiteforme.admin.dao.BlogArticleDao;
-import com.mysiteforme.admin.entity.BlogChannel;
+import com.mysiteforme.admin.entity.BlogArticle;
 import com.mysiteforme.admin.exception.MyException;
 import com.mysiteforme.admin.lucene.LuceneSearch;
 import com.mysiteforme.admin.service.BlogArticleService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.mysiteforme.admin.service.BlogChannelService;
-import org.apache.lucene.document.*;
-import org.apache.shiro.cache.Cache;
-import org.crazycake.shiro.RedisCacheManager;
-import org.crazycake.shiro.RedisManager;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.LongPoint;
+import org.apache.lucene.document.StoredField;
+import org.apache.lucene.document.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.*;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -28,11 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
-import static javafx.scene.input.KeyCode.V;
 
 /**
  * <p>

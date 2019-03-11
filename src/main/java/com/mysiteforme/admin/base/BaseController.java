@@ -1,20 +1,26 @@
 package com.mysiteforme.admin.base;
 
+import com.mysiteforme.admin.config.UserHolder;
 import com.mysiteforme.admin.entity.User;
-import com.mysiteforme.admin.realm.AuthRealm.ShiroUser;
-import com.mysiteforme.admin.service.*;
-import org.apache.shiro.SecurityUtils;
+import com.mysiteforme.admin.service.BlogArticleService;
+import com.mysiteforme.admin.service.BlogChannelService;
+import com.mysiteforme.admin.service.BlogCommentService;
+import com.mysiteforme.admin.service.BlogTagsService;
+import com.mysiteforme.admin.service.DictService;
+import com.mysiteforme.admin.service.LogService;
+import com.mysiteforme.admin.service.MenuService;
+import com.mysiteforme.admin.service.RescourceService;
+import com.mysiteforme.admin.service.RoleService;
+import com.mysiteforme.admin.service.SiteService;
+import com.mysiteforme.admin.service.TableService;
+import com.mysiteforme.admin.service.UploadInfoService;
+import com.mysiteforme.admin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class BaseController {
 	
 	public User getCurrentUser() {
-		ShiroUser shiroUser = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
-		if(shiroUser == null) {
-			return null;
-		}
-		User loginUser = userService.selectById(shiroUser.getId());
-		return loginUser;
+		return UserHolder.get();
 	}
 
 	@Autowired

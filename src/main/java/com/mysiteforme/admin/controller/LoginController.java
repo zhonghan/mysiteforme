@@ -1,20 +1,24 @@
 package com.mysiteforme.admin.controller;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mysiteforme.admin.annotation.SysLog;
 import com.mysiteforme.admin.base.BaseController;
 import com.mysiteforme.admin.base.MySysUser;
-import com.mysiteforme.admin.entity.*;
 import com.mysiteforme.admin.entity.Menu;
+import com.mysiteforme.admin.entity.User;
 import com.mysiteforme.admin.util.Constants;
 import com.mysiteforme.admin.util.RestResponse;
 import com.mysiteforme.admin.util.VerifyCodeUtil;
-import com.xiaoleilu.hutool.http.HttpUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.DisabledAccountException;
+import org.apache.shiro.authc.ExcessiveAttemptsException;
+import org.apache.shiro.authc.ExpiredCredentialsException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -33,7 +37,9 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.*;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class LoginController extends BaseController {
@@ -179,6 +185,12 @@ public class LoginController extends BaseController {
 	public String logOut(){
 		SecurityUtils.getSubject().logout();
 		return "redirect:/login";
+	}
+
+	@GetMapping("callback")
+	@SysLog("callback")
+	public String loginCallback(){
+		return "redirect:/index";
 	}
 }
 

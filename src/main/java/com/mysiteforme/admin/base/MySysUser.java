@@ -1,7 +1,7 @@
 package com.mysiteforme.admin.base;
 
-import com.mysiteforme.admin.realm.AuthRealm.ShiroUser;
-import org.apache.shiro.SecurityUtils;
+import com.mysiteforme.admin.config.UserHolder;
+import com.mysiteforme.admin.entity.User;
 
 /**
  * Created by wangl on 2017/11/25.
@@ -20,15 +20,14 @@ public class MySysUser {
     }
 
     public static String loginName() {
-        return ShiroUser().getloginName();
+        return ShiroUser().getNickName();
     }
 
     public static String nickName(){
         return ShiroUser().getNickName();
     }
 
-    public static ShiroUser ShiroUser() {
-        ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
-        return user;
+    public static User ShiroUser() {
+        return UserHolder.get();
     }
 }
