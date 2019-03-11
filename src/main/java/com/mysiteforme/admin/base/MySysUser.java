@@ -16,7 +16,7 @@ public class MySysUser {
     }
 
     public static Long id() {
-        return ShiroUser().getId();
+        return UserHolder.get().getId();
     }
 
     public static String loginName() {

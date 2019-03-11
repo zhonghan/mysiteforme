@@ -182,9 +182,9 @@ public class LoginController extends BaseController {
 
 	@GetMapping("systemLogout")
 	@SysLog("退出系统")
-	public String logOut(){
-		SecurityUtils.getSubject().logout();
-		return "redirect:/login";
+	public String logOut(HttpServletRequest request, HttpServletResponse response){
+		request.getSession().removeAttribute("USER_SESSION_KEY");
+		return "redirect:/index";
 	}
 
 	@GetMapping("callback")
